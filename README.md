@@ -1,5 +1,5 @@
-Project Texnologia Logismikou
+Calculator Project Texnologia Logismikou
 
-Necessery Tools.
+Necessary Tools.
 1. JavaFx
 2. SceneBuilder
