@@ -76,6 +76,9 @@ public class CalFormController {
     private Button btnsubs;
 
     @FXML
+    private Button btnB;
+
+    @FXML
     private TextArea txtHistory;
 
 
@@ -97,7 +100,7 @@ public class CalFormController {
         historyList = new ArrayList<>();
 
         btnList = FXCollections.observableArrayList(btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnPointer,btnEq,
-                btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE);
+                btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE,btnB);
         off();
         onOffFunction();
         setAnswer();
@@ -115,6 +118,13 @@ public class CalFormController {
             historyList.clear(); // Καθαρισμός ιστορικού
             txtHistory.clear();
         });
+
+        btnB.setOnAction(event -> {
+                    String currentText = txtShow.getText();
+                    if (currentText != null && currentText.length() > 0) {
+                        txtShow.setText(currentText.substring(0, currentText.length() - 1));  // Διαγραφή τελευταίου χαρακτήρα
+                    }
+                });
 
         btn0.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"0":"0");
