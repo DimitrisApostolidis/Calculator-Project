@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
@@ -74,20 +75,32 @@ public class CalFormController {
     @FXML
     private Button btnsubs;
 
+    @FXML
+    private TextArea txtHistory;
+
+
 
     private List<Button> btnList;
     private double answer;
     private String function;
+    private List<String> historyList;
 
     public void initialize(){
+
+        txtShow.setEditable(false);
+        txtShow.setDisable(true);  // Απενεργοποίηση του TextField
+        txtHistory.setEditable(false);
+        txtHistory.setDisable(true);
+
         answer=0;
         function="empty";
+        historyList = new ArrayList<>();
+
         btnList = FXCollections.observableArrayList(btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnPointer,btnEq,
                 btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE);
         off();
         onOffFunction();
         setAnswer();
-
         functions();
     }
 
@@ -99,6 +112,8 @@ public class CalFormController {
             function = "empty";
             answer = 0;
             lbIAnswer.setText("0");
+            historyList.clear(); // Καθαρισμός ιστορικού
+            txtHistory.clear();
         });
 
         btn0.setOnAction(event -> {
@@ -156,25 +171,65 @@ public class CalFormController {
         });
     }
 
+    private void setText(String value) {
+        txtShow.setText(txtShow.getText() != null ? txtShow.getText() + value : value);
+    }
+
     private void setAnswer(){
         lbIAnswer.setText(String.format("%.02f",answer));
         txtShow.clear();
     }
 
     private void action() {
-        switch (function){
-            case "empty" : answer = Double.parseDouble(txtShow.getText());
-                setAnswer();break;
-            case "sum" : answer += Double.parseDouble(txtShow.getText());
-                setAnswer();break;
-            case "sub" : answer -= Double.parseDouble(txtShow.getText());
-                setAnswer();break;
-            case "multi" : answer *= Double.parseDouble(txtShow.getText());
-                setAnswer();break;
-            case "dev" : answer /= Double.parseDouble(txtShow.getText());
-                setAnswer();break;
-            case "equal" : setAnswer();break;
+
+        if (txtShow.getText().isEmpty()) {
+            return;
         }
+        double inputValue = Double.parseDouble(txtShow.getText());
+
+        switch (function){
+            case "empty" :
+                answer = inputValue;
+                addToHistory(inputValue, "=");  // Προσθήκη ιστορικού με το "=" για πρώτη πράξη
+                setAnswer();
+                break;
+            case "sum" :
+                answer += inputValue;
+                addToHistory(inputValue, "+");  // Προσθήκη ιστορικού για πρόσθεση
+                setAnswer();
+                break;
+            case "sub" :
+                answer -= inputValue;
+                addToHistory(inputValue, "-");  // Προσθήκη ιστορικού για αφαίρεση
+                setAnswer();
+                break;
+            case "multi" :
+                answer *= inputValue;
+                addToHistory(inputValue, "*");  // Προσθήκη ιστορικού για πολλαπλασιασμό
+                setAnswer();
+                break;
+            case "dev" :
+                if (inputValue != 0) {
+                    answer /= inputValue;
+                    addToHistory(inputValue, "/");  // Προσθήκη ιστορικού για διαίρεση
+                } else {
+                    txtShow.setText("Error");  // Αν διαίρεση με 0, εμφανίζει σφάλμα
+                }
+                setAnswer();
+                break;
+            case "equal" :
+                addToHistory(inputValue, "=");  // Προσθήκη ιστορικού για ίσο
+                setAnswer();
+                break;
+        }
+    }
+
+    private void addToHistory(double inputValue, String operation) {
+        String historyEntry = lbIAnswer.getText() + " " + operation + " " + inputValue + " = " + answer;
+        historyList.add(historyEntry);
+
+        // Χρησιμοποιούμε appendText για να προσθέτουμε στο υπάρχον κείμενο
+        txtHistory.appendText(historyEntry + "\n");
     }
 
     private void off() {
@@ -199,9 +254,13 @@ public class CalFormController {
         btnOnOff.setOnAction(event -> {
             if (btnOnOff.getText().equals("ON")){
                 on();
+                txtShow.setDisable(false);  // Ενεργοποίηση του txtShow
+                txtHistory.setDisable(false);
                 btnOnOff.setText("OFF");
             }else if (btnOnOff.getText().equals("OFF")){
                 off();
+                txtShow.setDisable(true);  // Απενεργοποίηση του txtShow
+                txtHistory.setDisable(true);
                 btnOnOff.setText("ON");
             }
         });
