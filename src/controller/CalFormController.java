@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,23 +79,36 @@ public class CalFormController {
     private Button btnB;
 
     @FXML
-    private ToggleButton toggleTheme;
-
-    @FXML
     private TextArea txtHistory;
 
+    @FXML
+    private Button sqrt;
+
+    @FXML
+    private Button power2;
+
+    @FXML
+    private Button log;
+
+    @FXML
+    private Button power;
+
+    @FXML
+    private Button sin;
+
+    @FXML
+    private Button cos;
 
 
     private List<Button> btnList;
     private double answer;
     private String function;
     private List<String> historyList;
-    private boolean isDarkMode = false;
 
     public void initialize(){
 
         txtShow.setEditable(false);
-        txtShow.setDisable(true);
+        txtShow.setDisable(true);  // Απενεργοποίηση του TextField
         txtHistory.setEditable(false);
         txtHistory.setDisable(true);
 
@@ -107,7 +118,7 @@ public class CalFormController {
         historyList = new ArrayList<>();
 
         btnList = FXCollections.observableArrayList(btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnPointer,btnEq,
-                btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE,btnB);
+                btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE,btnB,sqrt,power2,power,cos,sin,log);
 
         onOffFunction();
         setAnswer();
@@ -116,7 +127,6 @@ public class CalFormController {
     }
 
     private void functions() {
-
         btnC.setOnAction(event -> {
             txtShow.clear();
         });
@@ -140,7 +150,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("0");
             }
         });
@@ -149,7 +158,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("1");
             }
         });
@@ -158,7 +166,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("2");
             }
         });
@@ -167,7 +174,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("3");
             }
         });
@@ -176,7 +182,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("4");
             }
         });
@@ -185,7 +190,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("5");
             }
         });
@@ -194,7 +198,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("6");
             }
         });
@@ -203,7 +206,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("7");
             }
         });
@@ -212,7 +214,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("8");
             }
         });
@@ -221,7 +222,6 @@ public class CalFormController {
             if (function == "equal")
             {
                 function = "empty";
-                System.out.println("equal");
                 lbIAnswer.setText("9");
             }
         });
@@ -248,7 +248,37 @@ public class CalFormController {
             action();
             function = "equal";
         });
-        toggleTheme.setOnAction(event -> toggleTheme());
+        sqrt.setOnAction(event -> {
+            function = "sqrt";
+            action();
+
+        });
+        power.setOnAction(event -> {
+
+            action();
+            function = "power";
+
+        });
+        power2.setOnAction(event -> {
+            function = "power2";
+            action();
+
+        });
+        log.setOnAction(event -> {
+            function = "log";
+            action();
+
+        });
+        sin.setOnAction(event -> {
+            function = "sin";
+            action();
+
+        });
+        cos.setOnAction(event -> {
+            function = "cos";
+            action();
+
+        });
     }
 
     private void setText(String value) {
@@ -266,53 +296,119 @@ public class CalFormController {
     }
 
     private void action() {
-
+        String HistoryEntryCustom;
+        double tempAnswer;
         if (txtShow.getText().isEmpty()) {
             return;
         }
         double inputValue = Double.parseDouble(txtShow.getText());
-            switch (function){
-            case "empty" :
-                answer = inputValue; // Προσθήκη ιστορικού με το "=" για πρώτη πράξη
-                setAnswer();
-                break;
-            case "sum" :
 
+            switch (function) {
+                case "empty":
+                    System.out.println(inputValue + "hi");
+                    answer = inputValue; // Προσθήκη ιστορικού με το "=" για πρώτη πράξη
+                    setAnswer();
+                    break;
+                case "sum":
+                    System.out.println(inputValue);
                     answer += inputValue;
                     addToHistory(inputValue, "+");  // Προσθήκη ιστορικού για πρόσθεση
                     setAnswer();
+                    break;
+                case "sub":
+                    answer -= inputValue;
+                    addToHistory(inputValue, "-");  // Προσθήκη ιστορικού για αφαίρεση
+                    setAnswer();
+                    break;
+                case "multi":
+                    answer *= inputValue;
+                    addToHistory(inputValue, "*");  // Προσθήκη ιστορικού για πολλαπλασιασμό
+                    setAnswer();
+                    break;
+                case "dev":
+                    if (inputValue != 0) {
+                        answer /= inputValue;
+                        addToHistory(inputValue, "/");  // Προσθήκη ιστορικού για διαίρεση
+                    } else {
+                        txtShow.setText("Error");  // Αν διαίρεση με 0, εμφανίζει σφάλμα
+                    }
+                    setAnswer();
+                    break;
+                case "equal":
+                    addToHistory(inputValue, "=");  // Προσθήκη ιστορικού για ίσο
+                    setAnswer();
+                    function = "empty";
+                    break;
 
+                case "sqrt" :
+                    tempAnswer = answer;
+                    answer = Math.sqrt(inputValue);
+                    setAnswer();
+                    HistoryEntryCustom =tempAnswer + " ^ " + inputValue + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+                    break;
 
-                break;
-            case "sub" :
-                answer -= inputValue;
-                addToHistory(inputValue, "-");  // Προσθήκη ιστορικού για αφαίρεση
-                setAnswer();
-                break;
-            case "multi" :
-                answer *= inputValue;
-                addToHistory(inputValue, "*");  // Προσθήκη ιστορικού για πολλαπλασιασμό
-                setAnswer();
-                break;
-            case "dev" :
-                if (inputValue != 0) {
-                    answer /= inputValue;
-                    addToHistory(inputValue, "/");  // Προσθήκη ιστορικού για διαίρεση
-                } else {
-                    txtShow.setText("Error");  // Αν διαίρεση με 0, εμφανίζει σφάλμα
-                }
-                setAnswer();
-                break;
-            case "equal" :
-                addToHistory(inputValue, "=");  // Προσθήκη ιστορικού για ίσο
-                setAnswer();
-                function = "empty";
-                break;
+                case "power" :
+                    tempAnswer = answer;
+                    answer = Math.pow(answer, inputValue);// Προσθήκη ιστορικού για πρόσθεση
+                    setAnswer();
+                    HistoryEntryCustom =tempAnswer + " ^ " + inputValue + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+
+                    break;
+
+                case "power2" :
+                    answer = inputValue * inputValue;
+                    setAnswer();
+
+                    HistoryEntryCustom =inputValue + "  " + "^ 2 " + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+                    function = "empty";
+                    break;
+
+                case "log" :
+                    int base = 10;
+                    answer = Math.log(inputValue) / Math.log(base);
+                    setAnswer();
+                    break;
+
+                case "cos" :
+                    break;
+
+                case "sin" :
+                    System.out.println("hey");
+                    double angleInRadiansSin = Math.toRadians(inputValue);
+                    double sinValue = Math.sin(angleInRadiansSin);
+                    double toleranceSin = 1e-6;
+
+                    if (Math.abs(sinValue) < toleranceSin) {
+                        answer = 0;
+                        setAnswer();
+                    }
+                    else {
+                        answer = inputValue;
+                        setAnswer();
+                    }
+                    break;
+
         }
     }
 
     private void addToHistory(double inputValue, String operation) {
         String historyEntry;
+
+        switch (operation) {
+            case "^2" :
+                historyEntry = operation + " " + (int)inputValue + " = " + (int)answer;
+                break;
+            case "sqrt" :
+                break;
+        }
+
+
         if (inputValue == (int)inputValue && answer == (int)answer) {
             historyEntry = lbIAnswer.getText() + " " + operation + " " + (int)inputValue + " = " + (int)answer;
         }
@@ -367,18 +463,5 @@ public class CalFormController {
                 btnOnOff.setText("ON");
             }
         });
-    }
-    private void toggleTheme() {
-        Scene scene = txtShow.getScene();
-        if (scene != null) {
-            if (isDarkMode) {
-                scene.getStylesheets().remove(getClass().getResource("/resources/dark.css").toExternalForm());
-                scene.getStylesheets().add(getClass().getResource("/resources/light.css").toExternalForm());
-            } else {
-                scene.getStylesheets().remove(getClass().getResource("/resources/light.css").toExternalForm());
-                scene.getStylesheets().add(getClass().getResource("/resources/dark.css").toExternalForm());
-            }
-            isDarkMode = !isDarkMode;
-        }
     }
 }
