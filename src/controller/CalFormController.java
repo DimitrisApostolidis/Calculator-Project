@@ -96,15 +96,17 @@ public class CalFormController {
         txtHistory.setDisable(true);
 
         answer=0;
+
         function="empty";
         historyList = new ArrayList<>();
 
         btnList = FXCollections.observableArrayList(btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnPointer,btnEq,
                 btnSum,btnsubs,btnMulti,btnDev,btnC,btnCE,btnB);
-        off();
+
         onOffFunction();
         setAnswer();
         functions();
+        off();
     }
 
     private void functions() {
@@ -114,7 +116,7 @@ public class CalFormController {
         btnCE.setOnAction(event -> {
             function = "empty";
             answer = 0;
-            lbIAnswer.setText("0");
+            lbIAnswer.setText("");
             historyList.clear(); // Καθαρισμός ιστορικού
             txtHistory.clear();
         });
@@ -128,33 +130,93 @@ public class CalFormController {
 
         btn0.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"0":"0");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("0");
+            }
         });
         btn1.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"1":"1");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("1");
+            }
         });
         btn2.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"2":"2");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("2");
+            }
         });
         btn3.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"3":"3");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("3");
+            }
         });
         btn4.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"4":"4");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("4");
+            }
         });
         btn5.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"5":"5");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("5");
+            }
         });
         btn6.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"6":"6");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("6");
+            }
         });
         btn7.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"7":"7");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("7");
+            }
         });
         btn8.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"8":"8");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("8");
+            }
         });
         btn9.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+"9":"9");
+            if (function == "equal")
+            {
+                function = "empty";
+                System.out.println("equal");
+                lbIAnswer.setText("9");
+            }
         });
         btnPointer.setOnAction(event -> {
             txtShow.setText(txtShow.getText()!=null? txtShow.getText()+".":"0.");
@@ -186,7 +248,12 @@ public class CalFormController {
     }
 
     private void setAnswer(){
-        lbIAnswer.setText(String.format("%.02f",answer));
+        if(answer == (int)answer) {
+            lbIAnswer.setText(String.valueOf((int) answer));
+        }
+        else {
+            lbIAnswer.setText(String.valueOf(answer));
+            }
         txtShow.clear();
     }
 
@@ -196,17 +263,18 @@ public class CalFormController {
             return;
         }
         double inputValue = Double.parseDouble(txtShow.getText());
-
-        switch (function){
+            switch (function){
             case "empty" :
-                answer = inputValue;
-                addToHistory(inputValue, "=");  // Προσθήκη ιστορικού με το "=" για πρώτη πράξη
+                answer = inputValue; // Προσθήκη ιστορικού με το "=" για πρώτη πράξη
                 setAnswer();
                 break;
             case "sum" :
-                answer += inputValue;
-                addToHistory(inputValue, "+");  // Προσθήκη ιστορικού για πρόσθεση
-                setAnswer();
+
+                    answer += inputValue;
+                    addToHistory(inputValue, "+");  // Προσθήκη ιστορικού για πρόσθεση
+                    setAnswer();
+
+
                 break;
             case "sub" :
                 answer -= inputValue;
@@ -230,12 +298,23 @@ public class CalFormController {
             case "equal" :
                 addToHistory(inputValue, "=");  // Προσθήκη ιστορικού για ίσο
                 setAnswer();
+                function = "empty";
                 break;
         }
     }
 
     private void addToHistory(double inputValue, String operation) {
-        String historyEntry = lbIAnswer.getText() + " " + operation + " " + inputValue + " = " + answer;
+        String historyEntry;
+        if (inputValue == (int)inputValue && answer == (int)answer) {
+            historyEntry = lbIAnswer.getText() + " " + operation + " " + (int)inputValue + " = " + (int)answer;
+        }
+        else {
+            if (inputValue == (int) inputValue) {
+                historyEntry = lbIAnswer.getText() + " " + operation + " " + (int) inputValue + " = " + answer;
+            } else {
+                historyEntry = lbIAnswer.getText() + " " + operation + " " + inputValue + " = " + answer;
+            }
+        }
         historyList.add(historyEntry);
 
         // Χρησιμοποιούμε appendText για να προσθέτουμε στο υπάρχον κείμενο
@@ -249,6 +328,9 @@ public class CalFormController {
         txtShow.clear();
         answer = 0;
         setAnswer();
+        lbIAnswer.setText("");
+
+
     }
 
     private void on() {
@@ -258,12 +340,14 @@ public class CalFormController {
         txtShow.clear();
         answer = 0;
         setAnswer();
+        lbIAnswer.setText("");
     }
 
     private void onOffFunction() {
         btnOnOff.setOnAction(event -> {
             if (btnOnOff.getText().equals("ON")){
                 on();
+
                 txtShow.setDisable(false);  // Ενεργοποίηση του txtShow
                 txtHistory.setDisable(false);
                 btnOnOff.setText("OFF");
@@ -271,6 +355,7 @@ public class CalFormController {
                 off();
                 txtShow.setDisable(true);  // Απενεργοποίηση του txtShow
                 txtHistory.setDisable(true);
+                txtHistory.clear();
                 btnOnOff.setText("ON");
             }
         });
