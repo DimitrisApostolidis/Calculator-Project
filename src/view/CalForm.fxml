@@ -19,7 +19,6 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <ToggleButton fx:id="toggleTheme" layoutX="332.0" layoutY="108.0" text="Dark Mode" />
       <Button fx:id="btnPointer" layoutX="26.0" layoutY="445.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="63.0" text=".">
          <font>
             <Font name="System Bold" size="25.0" />
