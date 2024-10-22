@@ -6,9 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ToggleButton;
 
 public class CalFormController {
 
@@ -99,11 +100,14 @@ public class CalFormController {
     @FXML
     private Button cos;
 
+    @FXML
+    private ToggleButton toggleTheme;
 
     private List<Button> btnList;
     private double answer;
     private String function;
     private List<String> historyList;
+    private boolean isDarkMode = false; // Για την εναλλαγή θεμάτων
 
     public void initialize(){
 
@@ -279,6 +283,7 @@ public class CalFormController {
             action();
 
         });
+        toggleTheme.setOnAction(event -> toggleTheme());
     }
 
     private void setText(String value) {
@@ -468,5 +473,18 @@ public class CalFormController {
                 btnOnOff.setText("ON");
             }
         });
+    }
+    private void toggleTheme() {
+        Scene scene = txtShow.getScene();
+        if (scene != null) {
+            if (isDarkMode) {
+                scene.getStylesheets().remove(getClass().getResource("/resources/dark.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/resources/light.css").toExternalForm());
+            } else {
+                scene.getStylesheets().remove(getClass().getResource("/resources/light.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/resources/dark.css").toExternalForm());
+            }
+            isDarkMode = !isDarkMode;
+        }
     }
 }
