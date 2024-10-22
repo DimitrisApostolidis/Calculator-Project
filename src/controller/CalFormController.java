@@ -425,15 +425,6 @@ public class CalFormController {
     private void addToHistory(double inputValue, String operation) {
         String historyEntry;
 
-        switch (operation) {
-            case "^2" :
-                historyEntry = operation + " " + (int)inputValue + " = " + (int)answer;
-                break;
-            case "sqrt" :
-                break;
-        }
-
-
         if (inputValue == (int)inputValue && answer == (int)answer) {
             historyEntry = lbIAnswer.getText() + " " + operation + " " + (int)inputValue + " = " + (int)answer;
         }
