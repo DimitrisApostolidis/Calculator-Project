@@ -386,23 +386,38 @@ public class CalFormController {
                     break;
 
                 case "cos" :
+                    double angleInRadiansCos = Math.toRadians(inputValue);
+                    double cosValue = Math.cos(angleInRadiansCos);
+                    double toleranceCos = 1e-10;
+                    answer = cosValue;
+                    setAnswer();
+                    if (Math.abs(cosValue) < toleranceCos) {
+                        answer = 0;
+                        setAnswer();
+                    }
+                    HistoryEntryCustom ="cos(" + inputValue + ")" + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+                    function = "empty";
                     break;
 
                 case "sin" :
-                    System.out.println("hey");
                     double angleInRadiansSin = Math.toRadians(inputValue);
                     double sinValue = Math.sin(angleInRadiansSin);
-                    double toleranceSin = 1e-6;
+                    double toleranceSin = 1e-10;
+                    answer = sinValue;
+                    setAnswer();
 
                     if (Math.abs(sinValue) < toleranceSin) {
                         answer = 0;
                         setAnswer();
                     }
-                    else {
-                        answer = inputValue;
-                        setAnswer();
-                    }
+                    HistoryEntryCustom ="sin(" + inputValue + ")" + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+                    function = "empty";
                     break;
+
 
         }
     }
