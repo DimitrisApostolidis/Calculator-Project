@@ -344,9 +344,10 @@ public class CalFormController {
                     tempAnswer = answer;
                     answer = Math.sqrt(inputValue);
                     setAnswer();
-                    HistoryEntryCustom =tempAnswer + " ^ " + inputValue + " = " + answer;
+                    HistoryEntryCustom =" √" + inputValue + " = " + answer;
                     historyList.add(HistoryEntryCustom);
                     txtHistory.appendText(HistoryEntryCustom + "\n");
+                    function = "empty";
                     break;
 
                 case "power" :
@@ -373,6 +374,10 @@ public class CalFormController {
                     int base = 10;
                     answer = Math.log(inputValue) / Math.log(base);
                     setAnswer();
+                    HistoryEntryCustom ="log(" + inputValue + ")" + " = " + answer;
+                    historyList.add(HistoryEntryCustom);
+                    txtHistory.appendText(HistoryEntryCustom + "\n");
+                    function = "empty";
                     break;
 
                 case "cos" :
