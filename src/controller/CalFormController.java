@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,9 @@ public class CalFormController {
     private Button btnB;
 
     @FXML
+    private ToggleButton toggleTheme;
+
+    @FXML
     private TextArea txtHistory;
 
 
@@ -87,11 +92,12 @@ public class CalFormController {
     private double answer;
     private String function;
     private List<String> historyList;
+    private boolean isDarkMode = false;
 
     public void initialize(){
 
         txtShow.setEditable(false);
-        txtShow.setDisable(true);  // Απενεργοποίηση του TextField
+        txtShow.setDisable(true);
         txtHistory.setEditable(false);
         txtHistory.setDisable(true);
 
@@ -110,6 +116,7 @@ public class CalFormController {
     }
 
     private void functions() {
+
         btnC.setOnAction(event -> {
             txtShow.clear();
         });
@@ -241,6 +248,7 @@ public class CalFormController {
             action();
             function = "equal";
         });
+        toggleTheme.setOnAction(event -> toggleTheme());
     }
 
     private void setText(String value) {
@@ -359,5 +367,18 @@ public class CalFormController {
                 btnOnOff.setText("ON");
             }
         });
+    }
+    private void toggleTheme() {
+        Scene scene = txtShow.getScene();
+        if (scene != null) {
+            if (isDarkMode) {
+                scene.getStylesheets().remove(getClass().getResource("/resources/dark.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/resources/light.css").toExternalForm());
+            } else {
+                scene.getStylesheets().remove(getClass().getResource("/resources/light.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/resources/dark.css").toExternalForm());
+            }
+            isDarkMode = !isDarkMode;
+        }
     }
 }

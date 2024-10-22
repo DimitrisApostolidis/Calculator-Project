@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="522.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CalFormController">
    <children>
-      <TextField fx:id="txtShow" layoutX="191.0" layoutY="79.0" prefHeight="36.0" prefWidth="208.0">
+      <TextField fx:id="txtShow" layoutX="187.0" layoutY="65.0" prefHeight="36.0" prefWidth="208.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -16,6 +16,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
+      <ToggleButton fx:id="toggleTheme" layoutX="332.0" layoutY="108.0" text="Dark Mode" />
       <Button fx:id="btnPointer" layoutX="26.0" layoutY="445.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="63.0" text=".">
          <font>
             <Font name="System Bold" size="25.0" />
