@@ -9,7 +9,6 @@ public class AppInitializer extends Application {
         launch(args);
 
     }
-    //test2
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
@@ -26,6 +25,6 @@ public class AppInitializer extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-}}
+    }}
 
 
