@@ -9,7 +9,7 @@ public class AppInitializer extends Application {
         launch(args);
 
     }
-    //test
+    //test2
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
