@@ -9,6 +9,7 @@ public class AppInitializer extends Application {
         launch(args);
 
     }
+    //test
     @Override
     public void start(Stage primaryStage) throws Exception {
         try {
