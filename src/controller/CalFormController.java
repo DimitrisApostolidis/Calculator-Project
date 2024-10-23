@@ -458,6 +458,7 @@ public class CalFormController {
             btn.setDisable(false);
         }
         txtShow.clear();
+        txtShow.clear();
         answer = 0;
         setAnswer();
         lbIAnswer.setText("");
