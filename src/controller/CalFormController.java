@@ -182,6 +182,7 @@ public class CalFormController {
             btn.setDisable(true);
         }
         txtShow.clear();
+        txtShow.clear();
         answer = 0;
         setAnswer();
     }
@@ -207,3 +208,4 @@ public class CalFormController {
         });
     }
 }
+
