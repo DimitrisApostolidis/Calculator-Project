@@ -1,0 +1,21 @@
+.root {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+}
+
+.button {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #000000;
+    -fx-border-color: #cccccc;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+}
+
+.toggle-button{
+    -fx-background-image: url("https://i.imgur.com/VpYpzS6.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
