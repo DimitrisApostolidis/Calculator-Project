@@ -98,9 +98,6 @@ public class CalFormController {
     private Button sin;
 
     @FXML
-    private Button cos;
-
-    @FXML
     private ToggleButton toggleTheme;
 
     private List<Button> btnList;
